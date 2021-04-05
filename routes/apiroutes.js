@@ -19,7 +19,10 @@ const upload = multer({
   //     fileSize: 10,
   //   },
 });
-
+var uploadmultiplefiles = upload.fields([
+  { name: "image", maxCount: 1 },
+  { name: "icon", maxCount: 1 },
+]);
 router.get("/all", (req, res) => {
   db.Todo.findAll().then((x) => res.json(x));
 });
@@ -103,20 +106,25 @@ router.delete("/subscribe/delete/:id", (req, res) => {
     })
     .then((x) => res.json("sucessfully deleted"));
 });
-router.post("/service/new", upload.single("image"), (req, res, next) => {
+router.post("/service", uploadmultiplefiles, (req, res, next) => {
+  console.log(req.files.image[0].path);
   db.Service.create({
     type: req.body.type,
-    image: req.file.path,
+    image: req.files.image[0].path,
     title: req.body.title,
     description: req.body.description,
     number: req.body.number,
     enable: req.body.enable,
     mincount: req.body.mincount,
+    icon: req.files.icon[0].path,
+    price: req.body.price,
+    default: req.body.default,
+    termdays: req.body.termdays,
   })
     .then((x) => res.json(x))
     .catch((err) => res.json(err));
 });
-router.put("/service/edit/:id", upload.single("image"), (req, res) => {
+router.put("/service/:id", upload.single("image"), (req, res) => {
   db.Service.update(
     {
       enable: false,

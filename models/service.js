@@ -1,15 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
   const Service = sequelize.define("Service", {
     type: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT("tiny"),
       allowNull: false,
     },
     image: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     title: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     description: {
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     number: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.TINYINT,
       allowNull: false,
     },
     enable: {
@@ -25,7 +25,23 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     mincount: {
+      type: DataTypes.TINYINT,
+      allowNull: false,
+    },
+    icon: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    price: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    default: {
+      type: DataTypes.TINYINT,
+      allowNull: false,
+    },
+    termdays: {
+      type: DataTypes.TINYINT,
       allowNull: false,
     },
   });
