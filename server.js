@@ -7,9 +7,10 @@ const PORT = process.env.PORT || 8000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const apiRoutes = require("./routes/apiroutes");
-app.use("/api", apiRoutes);
+// const apiRoutes = require("./routes/apiroutes");
+const apiRoutes = require("./routes/index");
 
+app.use("/", apiRoutes);
 db.sequelize.sync().then(() => {
   app.listen(PORT, () => {
     console.log(`listening on: http://localhost:${PORT}`);

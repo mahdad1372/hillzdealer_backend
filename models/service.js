@@ -1,19 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
   const Service = sequelize.define("Service", {
     type: {
-      type: DataTypes.TEXT("tiny"),
+      type: DataTypes.TINYINT,
       allowNull: false,
     },
     image: {
-      type: DataTypes.TEXT,
+      type: DataTypes.CHAR(255),
       allowNull: true,
     },
     title: {
-      type: DataTypes.TEXT,
+      type: DataTypes.CHAR(255),
       allowNull: false,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     number: {
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     icon: {
-      type: DataTypes.TEXT,
+      type: DataTypes.CHAR(255),
       allowNull: true,
     },
     price: {

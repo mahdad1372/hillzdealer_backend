@@ -1,27 +1,25 @@
-"use strict";
-const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class subscribe extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  subscribe.init(
-    {
-      full_name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      mobile: DataTypes.INTEGER,
-      status: DataTypes.INTEGER,
+  const subscribe = sequelize.define("subscribe", {
+    firstname: {
+      type: DataTypes.TEXT,
+      allowNull: false,
     },
-    {
-      sequelize,
-      modelName: "subscribe",
-    }
-  );
+    lastname: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    mobile: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.TINYINT,
+      allowNull: false,
+    },
+  });
   return subscribe;
 };
