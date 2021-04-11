@@ -3,6 +3,7 @@ const multer = require("multer");
 const servicecontrollers = require("../controller/service_controller");
 const subscribecontrollers = require("../controller/subscribe_controller");
 const aboutuscontrollers = require("../controller/aboutus_controller");
+const ticketcontrollers = require("../controller/ticket_controller");
 const router = express.Router();
 const storage = multer.diskStorage({
   destination: "./upload/images",
@@ -29,4 +30,10 @@ router.get("/aboutus", aboutuscontrollers.getaboutus);
 router.post("/aboutus", aboutuscontrollers.addaboutus);
 router.put("/aboutus/:id", aboutuscontrollers.editaboutus);
 router.delete("/aboutus/:id", aboutuscontrollers.deleteaboutus);
+
+router.get("/ticket", ticketcontrollers.getticket);
+router.post("/ticket", ticketcontrollers.addticket);
+// router.get("/reply", ticketcontrollers.replyticket);
+// router.put("/ticket/:id", aboutuscontrollers.editaboutus);
+// router.delete("/ticket/:id", aboutuscontrollers.deleteaboutus);
 module.exports = router;
