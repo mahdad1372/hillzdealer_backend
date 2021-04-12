@@ -21,5 +21,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+
+  // subscribe.associate = (models) => {
+  //   subscribe.belongsTo(models.ticket, {
+  //     foreignKey: {
+  //       allowNull: false,
+  //     },
+  //   });
+  // };
   return subscribe;
 };

@@ -4,6 +4,7 @@ const servicecontrollers = require("../controller/service_controller");
 const subscribecontrollers = require("../controller/subscribe_controller");
 const aboutuscontrollers = require("../controller/aboutus_controller");
 const ticketcontrollers = require("../controller/ticket_controller");
+const attachcontroller = require("../controller/attach.controller");
 const router = express.Router();
 const storage = multer.diskStorage({
   destination: "./upload/images",
@@ -33,6 +34,7 @@ router.delete("/aboutus/:id", aboutuscontrollers.deleteaboutus);
 
 router.get("/ticket", ticketcontrollers.getticket);
 router.post("/ticket", ticketcontrollers.addticket);
+router.post("/attach", attachcontroller.addattach);
 // router.get("/reply", ticketcontrollers.replyticket);
 // router.put("/ticket/:id", aboutuscontrollers.editaboutus);
 // router.delete("/ticket/:id", aboutuscontrollers.deleteaboutus);
