@@ -1,48 +1,38 @@
 const db = require("../models");
 exports.getticket = (req, res) => {
-  // db.attach
-  //   .findAll({
-  //     include: [db.ticket],
-  //   })
-
-  //   .then((x) => {
-  //     res.json(x);
-  //     res.json({ names: x.map((i) => i.attachfile), old: 4 });
-  //     res.json(x.map((i) => i.attachfile));
-  //     res.json(x[0].attachfile);
-  //   });
-  db.ticket.findAll().then((x) => res.json(x));
-  //   db.ticket.findAll().then((x) => res.json(x));
-  // attachfile
+  db.ticket
+    .findAll({
+      include: db.attach,
+    })
+    .then((x) => res.json({ data: x, status: 200 }))
+    .catch((err) => res.status(400).json({ status: 400 }));
 };
-exports.addticket = (req, res) => {
+exports.addticket = async (req, res) => {
+  const ss = await db.ticket.findAll();
+
   db.ticket
     .create({
+      // frk_reply: 0,
+      // reply: "",
+      // number: id,
+      number: 2100000 + ss.length + 1,
       title: req.body.title,
       unit: req.body.unit,
       text: req.body.text,
     })
     .then((x) => {
-      for (i = 0; i < req.body.names.length; i++) {
-        db.attach
-          .create({
-            attachfile: req.body.names[i],
+      Promise.all(
+        req.body.files.map((itm) => {
+          db.attach.create({
             ticketId: x.id,
-          })
-          .then((x) => res.json(x));
-      }
+            attachfile: itm,
+          });
+        })
+      ).then((x) =>
+        res.status(200).json({ data: "succsessfully created", status: 200 })
+      );
+    })
+    .catch((err) => {
+      res.status(400).json({ status: 400 });
     });
 };
-//   const titles = await db.Service.findOne({
-//     where: {
-//       title: req.body.title,
-//     },
-//   });
-// exports.replyticket = async (req, res) => {
-//   const ids = await db.ticket.findOne({
-//     where: {
-//       id: req.body.id,
-//     },
-//   });
-//   res.json({ ids });
-// };

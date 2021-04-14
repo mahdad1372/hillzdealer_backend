@@ -16,18 +16,22 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    reply: {
+    number: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.TEXT,
+      allowNull: false,
     },
   });
+  ticket.associate = (models) => {
+    ticket.hasMany(models.attach, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  };
 
-  // ticket.associate = (models) => {
-  //   ticket.belongsTo(models.subscribe, {
-  //     foreignKey: {
-  //       allowNull: false,
-  //     },
-  //   });
-  // };
   return ticket;
 };

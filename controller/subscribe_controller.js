@@ -11,7 +11,8 @@ exports.addsubscribe = (req, res) => {
       mobile: req.body.mobile,
       status: req.body.status,
     })
-    .then((x) => res.json(x));
+    .then((x) => res.status(200).json({ data: x, status: 200 }))
+    .catch((x) => res.status(400).json({ status: 400 }));
 };
 exports.editsubscribe = (req, res) => {
   db.subscribe
