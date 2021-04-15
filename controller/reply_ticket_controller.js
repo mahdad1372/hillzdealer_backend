@@ -17,6 +17,7 @@ exports.addreplyticket = (req, res) => {
       number: 0,
       frk_reply: req.body.id,
       text: req.body.text,
+      status: req.body.status,
     })
     .then((x) => {
       Promise.all(

@@ -19,6 +19,7 @@ exports.addticket = async (req, res) => {
       title: req.body.title,
       unit: req.body.unit,
       text: req.body.text,
+      status: req.body.status,
     })
     .then((x) => {
       Promise.all(

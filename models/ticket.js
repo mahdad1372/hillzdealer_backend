@@ -21,9 +21,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     status: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TINYINT,
       allowNull: false,
     },
+    // status: {
+    //   type: DataTypes.TEXT,
+    //   allowNull: false,
+    // },
   });
   ticket.associate = (models) => {
     ticket.hasMany(models.attach, {
