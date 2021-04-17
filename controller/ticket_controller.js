@@ -1,18 +1,27 @@
 const db = require("../models");
 exports.getticket = async (req, res) => {
   try {
-    const names = await db.ticket.findAll({
+    const datas = await db.ticket.findAll({
+      where: {
+        frk_reply: 0,
+      },
+      order: [["createdAt", "DESC"]],
       include: db.attach,
+      // order: ["createdAt", "DESC"],
     });
     res.json({
-      data: names.map((i) => ({
+      data: datas.map((i) => ({
         id: i.id,
         title: i.title,
         name: "mahdad",
-        attaches: i.attaches.map((i) => i.attachfile),
+        attaches: i.attaches,
         status: i.status,
         unit: i.unit,
         text: i.text,
+        number: i.number,
+        frk_reply: i.frk_reply,
+        createdAt: i.createdAt,
+        updatedAt: i.updatedAt,
       })),
       status: 200,
     });
@@ -27,6 +36,7 @@ exports.addticket = async (req, res) => {
       // frk_reply: 0,
       // reply: "",
       // number: id,
+      frk_reply: 0,
       number: 2100000 + ss.length + 1,
       title: req.body.title,
       unit: req.body.unit,
@@ -35,10 +45,10 @@ exports.addticket = async (req, res) => {
     })
     .then((x) => {
       Promise.all(
-        req.body.files.map((itm) => {
+        req.files.map((itm) => {
           db.attach.create({
             ticketId: x.id,
-            attachfile: itm,
+            attachfile: itm.originalname,
           });
         })
       ).then((x) =>
@@ -48,4 +58,18 @@ exports.addticket = async (req, res) => {
     .catch((err) => {
       res.status(400).json({ status: 400 });
     });
+};
+exports.editticket = (req, res) => {
+  db.ticket
+    .update(
+      {
+        status: req.body.status,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    )
+    .then((x) => res.json({ data: "successfully updated", status: 200 }));
 };
