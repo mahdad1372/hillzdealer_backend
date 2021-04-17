@@ -1,15 +1,27 @@
 const db = require("../models");
-exports.getticket = (req, res) => {
-  db.ticket
-    .findAll({
+exports.getticket = async (req, res) => {
+  try {
+    const names = await db.ticket.findAll({
       include: db.attach,
-    })
-    .then((x) => res.json({ data: x, status: 200 }))
-    .catch((err) => res.status(400).json({ status: 400 }));
+    });
+    res.json({
+      data: names.map((i) => ({
+        id: i.id,
+        title: i.title,
+        name: "mahdad",
+        attaches: i.attaches.map((i) => i.attachfile),
+        status: i.status,
+        unit: i.unit,
+        text: i.text,
+      })),
+      status: 200,
+    });
+  } catch (err) {
+    res.status(400);
+  }
 };
 exports.addticket = async (req, res) => {
   const ss = await db.ticket.findAll();
-
   db.ticket
     .create({
       // frk_reply: 0,
