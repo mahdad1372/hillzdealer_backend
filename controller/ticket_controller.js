@@ -1,12 +1,11 @@
 const db = require("../models");
 exports.getticket = async (req, res) => {
-  console.log(req.params.id);
   try {
     const datas = await db.ticket.findAll({
-      where: {
-        frk_reply: 0,
-      },
-      order: [["createdAt", req.params.id]],
+      // where: {
+      //   sta: 0,
+      // },
+      order: [["status", req.params.id]],
       include: db.attach,
     });
     res.json({
@@ -29,6 +28,39 @@ exports.getticket = async (req, res) => {
     res.status(400);
   }
 };
+
+// exports.getticket2 = async (req, res) => {
+//   console.log(req.query);
+//   var query = req.query[0];
+
+//   try {
+//     const datas = await db.ticket.findAll({
+//       where: {
+//         status: 0,
+//       },
+//       // order: [["createdAt", req.params.id]],
+//       include: db.attach,
+//     });
+//     res.json({
+//       data: datas.map((i) => ({
+//         id: i.id,
+//         title: i.title,
+//         name: "mahdad",
+//         attaches: i.attaches,
+//         status: i.status,
+//         unit: i.unit,
+//         text: i.text,
+//         number: i.number,
+//         frk_reply: i.frk_reply,
+//         createdAt: i.createdAt,
+//         updatedAt: i.updatedAt,
+//       })),
+//       status: 200,
+//     });
+//   } catch (err) {
+//     res.status(400);
+//   }
+// };
 exports.addticket = async (req, res) => {
   const ss = await db.ticket.findAll();
   db.ticket

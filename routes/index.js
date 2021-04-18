@@ -6,9 +6,10 @@ const aboutuscontrollers = require("../controller/aboutus_controller");
 const ticketcontrollers = require("../controller/ticket_controller");
 const replycontrollers = require("../controller/reply_ticket_controller");
 const product_categorycontrollers = require("../controller/product_category_controller");
+const uploadscontroller = require("../controller/upload_img");
 const product = require("../controller/product");
 const router = express.Router();
-const storage = multer.diskStorage({
+const storage = multer.memoryStorage({
   destination: "../upload/images",
   filename: (req, file, cb) => {
     return cb(null, `${file.fieldname}_${Date.now()}${file.originalname}`);
@@ -36,15 +37,31 @@ router.put("/aboutus/:id", aboutuscontrollers.editaboutus);
 router.delete("/aboutus/:id", aboutuscontrollers.deleteaboutus);
 
 router.get("/ticket/:id", ticketcontrollers.getticket);
+// router.get("/ticket2", ticketcontrollers.getticket2);
 router.put("/ticket/:id", ticketcontrollers.editticket);
 router.post("/ticket", upload.array("files"), ticketcontrollers.addticket);
 router.post("/reply", upload.array("files"), replycontrollers.addreplyticket);
+router.post(
+  "/upload",
+  upload.single("file"),
+  uploadscontroller.uploadImageToAzure
+);
 router.get("/reply/:id", replycontrollers.getreplyticket);
 
 router.post(
   "/product_category",
+  upload.fields([
+    { name: "image_url", maxCount: 1 },
+    { name: "icon_url", maxCount: 1 },
+  ]),
+  uploadscontroller.uploadImageToAzure2("test"),
   product_categorycontrollers.addproductcategory
 );
-router.post("/product", product.addproduct);
+router.post(
+  "/product",
+  upload.single("image_url"),
+  uploadscontroller.uploadImageToAzure("test"),
+  product.addproduct
+);
 router.get("/product", product.getproduct);
 module.exports = router;

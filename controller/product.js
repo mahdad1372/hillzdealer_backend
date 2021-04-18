@@ -9,14 +9,17 @@ exports.getproduct = async (req, res) => {
     res.status(400);
   }
 };
-exports.addproduct = (req, res) => {
-  db.product
-    .create({
+exports.addproduct = async (req, res) => {
+  try {
+    const product = await db.product.create({
       name: req.body.name,
       description: req.body.description,
-      image_url: req.body.image_url,
+      image_url: req.body.image_file,
       is_in_first_page: req.body.is_in_first_page,
       frk_category: req.body.frk_category,
-    })
-    .then((x) => res.json(x));
+    });
+    res.json(product);
+  } catch (err) {
+    res.json(err);
+  }
 };
