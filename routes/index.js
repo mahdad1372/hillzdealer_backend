@@ -35,7 +35,7 @@ router.post("/aboutus", aboutuscontrollers.addaboutus);
 router.put("/aboutus/:id", aboutuscontrollers.editaboutus);
 router.delete("/aboutus/:id", aboutuscontrollers.deleteaboutus);
 
-router.get("/ticket", ticketcontrollers.getticket);
+router.get("/ticket/:id", ticketcontrollers.getticket);
 router.put("/ticket/:id", ticketcontrollers.editticket);
 router.post("/ticket", upload.array("files"), ticketcontrollers.addticket);
 router.post("/reply", upload.array("files"), replycontrollers.addreplyticket);

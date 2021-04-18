@@ -1,13 +1,13 @@
 const db = require("../models");
 exports.getticket = async (req, res) => {
+  console.log(req.params.id);
   try {
     const datas = await db.ticket.findAll({
       where: {
         frk_reply: 0,
       },
-      order: [["createdAt", "DESC"]],
+      order: [["createdAt", req.params.id]],
       include: db.attach,
-      // order: ["createdAt", "DESC"],
     });
     res.json({
       data: datas.map((i) => ({
