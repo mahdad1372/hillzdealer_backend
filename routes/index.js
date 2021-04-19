@@ -9,6 +9,7 @@ const product_categorycontrollers = require("../controller/product_category_cont
 const uploadscontroller = require("../controller/upload_img");
 const product = require("../controller/product");
 const contactus = require("../controller/contactus_contoller");
+const faq = require("../controller/faq_controller");
 const router = express.Router();
 const storage = multer.memoryStorage({
   destination: "../upload/images",
@@ -78,4 +79,6 @@ router.get("/product", product.getproduct);
 router.post("/contactus", contactus.addcontactus);
 router.put("/contactus/:id", contactus.editcontactus);
 router.get("/contactus", contactus.getproduct);
+
+router.post("/faq", faq.addfaq);
 module.exports = router;
