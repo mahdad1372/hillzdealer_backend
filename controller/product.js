@@ -4,7 +4,7 @@ exports.getproduct = async (req, res) => {
     const datas = await db.product.findAll({
       include: db.product_category,
     });
-    res.json(datas);
+    res.json({ data: datas, status: 200 });
   } catch (err) {
     res.status(400);
   }
@@ -18,7 +18,7 @@ exports.addproduct = async (req, res) => {
       is_in_first_page: req.body.is_in_first_page,
       frk_category: req.body.frk_category,
     });
-    res.json(product);
+    res.json({ data: product, status: 200 });
   } catch (err) {
     res.json(err);
   }

@@ -8,6 +8,7 @@ const replycontrollers = require("../controller/reply_ticket_controller");
 const product_categorycontrollers = require("../controller/product_category_controller");
 const uploadscontroller = require("../controller/upload_img");
 const product = require("../controller/product");
+const contactus = require("../controller/contactus_contoller");
 const router = express.Router();
 const storage = multer.memoryStorage({
   destination: "../upload/images",
@@ -57,6 +58,16 @@ router.post(
   uploadscontroller.uploadImageToAzure2("test"),
   product_categorycontrollers.addproductcategory
 );
+router.put(
+  "/product_category",
+  upload.fields([
+    { name: "image_url", maxCount: 1 },
+    { name: "icon_url", maxCount: 1 },
+  ]),
+  uploadscontroller.uploadImageToAzure2("test"),
+  product_categorycontrollers.editproductcategory
+);
+router.get("/product_category", product_categorycontrollers.getproductcategory);
 router.post(
   "/product",
   upload.single("image_url"),
@@ -64,4 +75,7 @@ router.post(
   product.addproduct
 );
 router.get("/product", product.getproduct);
+router.post("/contactus", contactus.addcontactus);
+router.put("/contactus/:id", contactus.editcontactus);
+router.get("/contactus", contactus.getproduct);
 module.exports = router;
